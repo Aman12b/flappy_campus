@@ -6,7 +6,7 @@ let scene, camera, renderer, controls;
 let world, ball, ballBody;
 let ground, groundBody;
 let pillars = [];
-let jumpPower = 6;
+let jumpPower = 7;
 let canJump = true;
 let ballLane = 0; // The x-axis lane the ball is in (fixed)
 let ballRadius = 1; // Radius of the ball
@@ -166,7 +166,7 @@ function detectCollisions() {
         if (overlapX && overlapY && overlapZ) {
             // A collision has occurred
             pillar.mesh.material.color.set(0xffff00); // Change pillar color to yellow
-            //resetGame();
+            resetGame();
 
             // Reset color after a short delay (500ms)
             setTimeout(() => {
@@ -186,8 +186,10 @@ function animate() {
     requestAnimationFrame(animate);
     world.step(1 / 60);
 
-    ball.position.copy(ballBody.position).z = 0;
-    ballBody.position.z += 0.1;
+    ball.position.copy(ballBody.position)
+    ballBody.position.z = 0;
+    camera.position.copy(ball.position);
+
 
     if (ballBody.position.y <= 1) {
         canJump = true;
@@ -197,15 +199,12 @@ function animate() {
 
 
 
-    const offset = new THREE.Vector3(-5, 0, 0); // Adjust this for desired distance
-    camera.position.copy(ball.position).add(offset); // Position camera behind the ball
-    camera.lookAt(ball.position); // Ensure the camera always faces the ball
+    // Look slightly ahead of the ball
+    const lookAtOffset = new THREE.Vector3(5, 0, 0); // Adjust x to look ahead
+    camera.lookAt(ball.position.clone().add(lookAtOffset));
 
-    // Place the camera exactly inside the ball
-    camera.position.copy(ball.position)//.add(offset); // Camera inside the ball
-    camera.position.x -= 1;
-    
-    camera.lookAt(ball.position.clone().add(new THREE.Vector3(-10, ballBody.position.y, 0))); // Make the camera look in the forward direction (z-axis)
+
+
     // Optionally hide the ball mesh
     ball.visible = true; // Hide ball mesh so you don't see it from the inside
 
@@ -221,7 +220,6 @@ function animate() {
     });
 
     detectCollisions();
-    controls.update();
     renderer.render(scene, camera);
 }
 
