@@ -28,6 +28,7 @@ document.body.appendChild(scoreDisplay);
 function init() {
     // Set up scene, camera, and renderer
     scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x87CEEB);
     camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -83,7 +84,7 @@ function init() {
 }
 
 function createPillarPair(x) {
-    const minPillarHeight = 5;
+    const minPillarHeight = 10;
     const maxPillarHeight = 15;
     const totalHeight = 30;
 
