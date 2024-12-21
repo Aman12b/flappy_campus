@@ -10,7 +10,7 @@ A 3D physics-based game built with **Three.js** and **Cannon.js** This game is i
 - Game reset on collision, with score tracking.
 
 ## 📸 Demo
-![Game Screenshot](https://imgur.com/a/SODFFFy)
+![Game Screenshot](https://imgur.com/dmGbtdc)
 
 ## 🛠️ Setup Instructions
 
